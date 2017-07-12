@@ -20,7 +20,7 @@ Creates an IP network. An IP network allows you to define an IP subnet in your a
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import swagger_client
 from swagger_client.rest import ApiException
@@ -70,7 +70,7 @@ Delete an IP Network
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import swagger_client
 from swagger_client.rest import ApiException
@@ -119,7 +119,7 @@ Retrieve Details of an IP Network
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import swagger_client
 from swagger_client.rest import ApiException
@@ -169,7 +169,7 @@ Retrieves details of all the IP networks that are available in the specified con
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import swagger_client
 from swagger_client.rest import ApiException
@@ -219,7 +219,7 @@ You can update an IP network and change the specified IP address prefix for the 
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import swagger_client
 from swagger_client.rest import ApiException

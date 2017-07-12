@@ -14,20 +14,36 @@
 from __future__ import absolute_import
 
 # import models into sdk package
-from .models.daily_weekly_interval import DailyWeeklyInterval
-from .models.hourly_interval import HourlyInterval
-from .models.interval import Interval
+from .models.ip_association_discover_response import IPAssociationDiscoverResponse
+from .models.ip_association_list_response import IPAssociationListResponse
+from .models.ip_association_post_request import IPAssociationPostRequest
+from .models.ip_association_response import IPAssociationResponse
+from .models.instance_discover_response import InstanceDiscoverResponse
+from .models.instance_list_response import InstanceListResponse
+from .models.instance_put_request import InstancePutRequest
+from .models.instance_response import InstanceResponse
+from .models.ip_reservation_discover_response import IPReservationDiscoverResponse
+from .models.ip_reservation_list_response import IPReservationListResponse
+from .models.ip_reservation_post_request import IPReservationPostRequest
+from .models.ip_reservation_put_request import IPReservationPutRequest
+from .models.ip_reservation_response import IPReservationResponse
 from .models.ip_network_list_response import IpNetworkListResponse
 from .models.ip_network_post_request import IpNetworkPostRequest
 from .models.ip_network_put_request import IpNetworkPutRequest
 from .models.ip_network_response import IpNetworkResponse
+from .models.authenticate import Authenticate
+from .models.interval import Interval
+from .models.daily_weekly_interval import DailyWeeklyInterval
+from .models.hourly_interval import HourlyInterval
 
 # import apis into sdk package
+from .apis.ip_associations_api import IPAssociationsApi
+from .apis.instances_api import InstancesApi
+from .apis.ip_reservations_api import IPReservationsApi
 from .apis.ip_networks_api import IPNetworksApi
+from .apis.authenticate_api import AuthenticateApi
 
 # import ApiClient
 from .api_client import ApiClient
 
 from .configuration import Configuration
-
-configuration = Configuration()

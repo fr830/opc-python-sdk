@@ -20,7 +20,6 @@ import re
 # python 2 and python 3 compatibility library
 from six import iteritems
 
-from ..configuration import Configuration
 from ..api_client import ApiClient
 
 
@@ -32,28 +31,20 @@ class IPNetworksApi(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
-        if api_client:
-            self.api_client = api_client
-        else:
-            if not config.api_client:
-                config.api_client = ApiClient()
-            self.api_client = config.api_client
+        if api_client is None:
+            api_client = ApiClient()
+        self.api_client = api_client
 
     def add_ip_network(self, body, **kwargs):
         """
         Create an IP Network
         Creates an IP network. An IP network allows you to define an IP subnet in your account. With an IP network you can isolate instances by creating separate IP networks and adding instances to specific networks. Traffic can flow between instances within the same IP network, but by default each network is isolated from other networks and from the public Internet.<p><b>Required Role: </b> To complete this task, you must have the <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.add_ip_network(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.add_ip_network(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param IpNetworkPostRequest body: (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: IpNetworkResponse
@@ -61,7 +52,7 @@ class IPNetworksApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.add_ip_network_with_http_info(body, **kwargs)
         else:
             (data) = self.add_ip_network_with_http_info(body, **kwargs)
@@ -72,15 +63,11 @@ class IPNetworksApi(object):
         Create an IP Network
         Creates an IP network. An IP network allows you to define an IP subnet in your account. With an IP network you can isolate instances by creating separate IP networks and adding instances to specific networks. Traffic can flow between instances within the same IP network, but by default each network is isolated from other networks and from the public Internet.<p><b>Required Role: </b> To complete this task, you must have the <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.add_ip_network_with_http_info(body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.add_ip_network_with_http_info(body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param IpNetworkPostRequest body: (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: IpNetworkResponse
@@ -89,7 +76,7 @@ class IPNetworksApi(object):
         """
 
         all_params = ['body', 'cookie']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -110,10 +97,9 @@ class IPNetworksApi(object):
 
         collection_formats = {}
 
-        resource_path = '/network/v1/ipnetwork/'.replace('{format}', 'json')
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
         if 'cookie' in params:
@@ -136,7 +122,7 @@ class IPNetworksApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'POST',
+        return self.api_client.call_api('/network/v1/ipnetwork/', 'POST',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -145,7 +131,7 @@ class IPNetworksApi(object):
                                         files=local_var_files,
                                         response_type='IpNetworkResponse',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -156,15 +142,11 @@ class IPNetworksApi(object):
         Delete an IP Network
         <b>Required Role: </b> To complete this task, you must have the <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.delete_ip_network(name, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.delete_ip_network(name, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str name: The three-part name (<code>/Compute-<em>identity_domain</em>/<em>user</em>/<em>object</em></code>) of the IP network. (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: None
@@ -172,7 +154,7 @@ class IPNetworksApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.delete_ip_network_with_http_info(name, **kwargs)
         else:
             (data) = self.delete_ip_network_with_http_info(name, **kwargs)
@@ -183,15 +165,11 @@ class IPNetworksApi(object):
         Delete an IP Network
         <b>Required Role: </b> To complete this task, you must have the <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.delete_ip_network_with_http_info(name, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.delete_ip_network_with_http_info(name, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str name: The three-part name (<code>/Compute-<em>identity_domain</em>/<em>user</em>/<em>object</em></code>) of the IP network. (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: None
@@ -200,7 +178,7 @@ class IPNetworksApi(object):
         """
 
         all_params = ['name', 'cookie']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -221,12 +199,11 @@ class IPNetworksApi(object):
 
         collection_formats = {}
 
-        resource_path = '/network/v1/ipnetwork/{name}'.replace('{format}', 'json')
         path_params = {}
         if 'name' in params:
             path_params['name'] = params['name']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
         if 'cookie' in params:
@@ -247,7 +224,7 @@ class IPNetworksApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'DELETE',
+        return self.api_client.call_api('/network/v1/ipnetwork/{name}', 'DELETE',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -256,7 +233,7 @@ class IPNetworksApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -267,15 +244,11 @@ class IPNetworksApi(object):
         Retrieve Details of an IP Network
         <b>Required Role: </b>To complete this task, you must have the <code>Compute_Monitor</code> or <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.get_ip_network(name, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.get_ip_network(name, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str name: The three-part name (<code>/Compute-<em>identity_domain</em>/<em>user</em>/<em>object</em></code>) of the IP network. (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: IpNetworkResponse
@@ -283,7 +256,7 @@ class IPNetworksApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.get_ip_network_with_http_info(name, **kwargs)
         else:
             (data) = self.get_ip_network_with_http_info(name, **kwargs)
@@ -294,15 +267,11 @@ class IPNetworksApi(object):
         Retrieve Details of an IP Network
         <b>Required Role: </b>To complete this task, you must have the <code>Compute_Monitor</code> or <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.get_ip_network_with_http_info(name, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.get_ip_network_with_http_info(name, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str name: The three-part name (<code>/Compute-<em>identity_domain</em>/<em>user</em>/<em>object</em></code>) of the IP network. (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: IpNetworkResponse
@@ -311,7 +280,7 @@ class IPNetworksApi(object):
         """
 
         all_params = ['name', 'cookie']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -332,12 +301,11 @@ class IPNetworksApi(object):
 
         collection_formats = {}
 
-        resource_path = '/network/v1/ipnetwork/{name}'.replace('{format}', 'json')
         path_params = {}
         if 'name' in params:
             path_params['name'] = params['name']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
         if 'cookie' in params:
@@ -358,7 +326,7 @@ class IPNetworksApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'GET',
+        return self.api_client.call_api('/network/v1/ipnetwork/{name}', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -367,7 +335,7 @@ class IPNetworksApi(object):
                                         files=local_var_files,
                                         response_type='IpNetworkResponse',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -378,15 +346,11 @@ class IPNetworksApi(object):
         Retrieve Details of all IP Networks in a Container
         Retrieves details of all the IP networks that are available in the specified container.<p><b>Required Role: </b>To complete this task, you must have the <code>Compute_Monitor</code> or <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.list_ip_network(container, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.list_ip_network(container, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str container: <p><code>/Compute-<em>identity_domain</em>/<em>user</em></code> or <p><code>/Compute-<em>identity_domain</em></code> (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: IpNetworkListResponse
@@ -394,7 +358,7 @@ class IPNetworksApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.list_ip_network_with_http_info(container, **kwargs)
         else:
             (data) = self.list_ip_network_with_http_info(container, **kwargs)
@@ -405,15 +369,11 @@ class IPNetworksApi(object):
         Retrieve Details of all IP Networks in a Container
         Retrieves details of all the IP networks that are available in the specified container.<p><b>Required Role: </b>To complete this task, you must have the <code>Compute_Monitor</code> or <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.list_ip_network_with_http_info(container, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.list_ip_network_with_http_info(container, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str container: <p><code>/Compute-<em>identity_domain</em>/<em>user</em></code> or <p><code>/Compute-<em>identity_domain</em></code> (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
         :return: IpNetworkListResponse
@@ -422,7 +382,7 @@ class IPNetworksApi(object):
         """
 
         all_params = ['container', 'cookie']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -443,12 +403,11 @@ class IPNetworksApi(object):
 
         collection_formats = {}
 
-        resource_path = '/network/v1/ipnetwork/{container}/'.replace('{format}', 'json')
         path_params = {}
         if 'container' in params:
             path_params['container'] = params['container']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
         if 'cookie' in params:
@@ -469,7 +428,7 @@ class IPNetworksApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'GET',
+        return self.api_client.call_api('/network/v1/ipnetwork/{container}/', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -478,7 +437,7 @@ class IPNetworksApi(object):
                                         files=local_var_files,
                                         response_type='IpNetworkListResponse',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
@@ -489,15 +448,11 @@ class IPNetworksApi(object):
         Update an IP Network
         You can update an IP network and change the specified IP address prefix for the network after you've created the network and attached instances to it. However, when you change an IP address prefix, it could cause the IP addresses currently assigned to existing instances to fall outside the specified IP network. If this happens, all traffic to and from those vNICs will be dropped.<p>If the IP address of an instance is dynamically allocated, stopping the instance orchestration and restarting it will reassign a valid IP address from the IP network to the instance.<p>However, if the IP address of an instance is static - that is, if the IP address is specified in the instance orchestration while creating the instance - then the IP address can't be updated by stopping the instance orchestration and restarting it. You would have to manually update the orchestration to assign a valid IP address to the vNIC attached to that IP network.<p>It is therefore recommended that if you update an IP network, you only expand the network by specifying the same IP address prefix but with a shorter prefix length. For example, you can expand 192.168.1.0/24 to 192.168.1.0/20. Don't, however, change the IP address. This ensures that all IP addresses that have been currently allocated to instances remain valid in the updated IP network.<p><b>Required Role: </b> To complete this task, you must have the <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.update_ip_network(name, body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.update_ip_network(name, body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str name: The three-part name (<code>/Compute-<em>identity_domain</em>/<em>user</em>/<em>object</em></code>) of the IP network. (required)
         :param IpNetworkPutRequest body: (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
@@ -506,7 +461,7 @@ class IPNetworksApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('callback'):
+        if kwargs.get('async'):
             return self.update_ip_network_with_http_info(name, body, **kwargs)
         else:
             (data) = self.update_ip_network_with_http_info(name, body, **kwargs)
@@ -517,15 +472,11 @@ class IPNetworksApi(object):
         Update an IP Network
         You can update an IP network and change the specified IP address prefix for the network after you've created the network and attached instances to it. However, when you change an IP address prefix, it could cause the IP addresses currently assigned to existing instances to fall outside the specified IP network. If this happens, all traffic to and from those vNICs will be dropped.<p>If the IP address of an instance is dynamically allocated, stopping the instance orchestration and restarting it will reassign a valid IP address from the IP network to the instance.<p>However, if the IP address of an instance is static - that is, if the IP address is specified in the instance orchestration while creating the instance - then the IP address can't be updated by stopping the instance orchestration and restarting it. You would have to manually update the orchestration to assign a valid IP address to the vNIC attached to that IP network.<p>It is therefore recommended that if you update an IP network, you only expand the network by specifying the same IP address prefix but with a shorter prefix length. For example, you can expand 192.168.1.0/24 to 192.168.1.0/20. Don't, however, change the IP address. This ensures that all IP addresses that have been currently allocated to instances remain valid in the updated IP network.<p><b>Required Role: </b> To complete this task, you must have the <code>Compute_Operations</code> role. If this role isn't assigned to you or you're not sure, then ask your system administrator to ensure that the role is assigned to you in Oracle Cloud My Services. See <a target=\"_blank\" href=\"http://www.oracle.com/pls/topic/lookup?ctx=stcomputecs&id=MMOCS-GUID-54C2E747-7D5B-451C-A39C-77936178EBB6\">Modifying User Roles</a> in <em>Managing and Monitoring Oracle Cloud</em>.
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.update_ip_network_with_http_info(name, body, callback=callback_function)
+        asynchronous HTTP request, please pass async=True
+        >>> thread = api.update_ip_network_with_http_info(name, body, async=True)
+        >>> result = thread.get()
 
-        :param callback function: The callback function
-            for asynchronous request. (optional)
+        :param async bool
         :param str name: The three-part name (<code>/Compute-<em>identity_domain</em>/<em>user</em>/<em>object</em></code>) of the IP network. (required)
         :param IpNetworkPutRequest body: (required)
         :param str cookie: The Cookie: header must be included with every request to the service. It must be set to the value of the set-cookie header in the response received to the POST /authenticate/ call.
@@ -535,7 +486,7 @@ class IPNetworksApi(object):
         """
 
         all_params = ['name', 'body', 'cookie']
-        all_params.append('callback')
+        all_params.append('async')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -559,12 +510,11 @@ class IPNetworksApi(object):
 
         collection_formats = {}
 
-        resource_path = '/network/v1/ipnetwork/{name}'.replace('{format}', 'json')
         path_params = {}
         if 'name' in params:
             path_params['name'] = params['name']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
         if 'cookie' in params:
@@ -587,7 +537,7 @@ class IPNetworksApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'PUT',
+        return self.api_client.call_api('/network/v1/ipnetwork/{name}', 'PUT',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -596,7 +546,7 @@ class IPNetworksApi(object):
                                         files=local_var_files,
                                         response_type='IpNetworkResponse',
                                         auth_settings=auth_settings,
-                                        callback=params.get('callback'),
+                                        async=params.get('async'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),
